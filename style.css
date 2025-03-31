@@ -5,11 +5,23 @@
     box-sizing: border-box;
 }
 
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: #333;
     background-color: #f9f9f9;
+}
+
+/* Reusable container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Header Styles */
@@ -24,9 +36,6 @@ header {
 }
 
 .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,8 +54,10 @@ nav a {
     transition: color 0.3s ease;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus {
     color: #ffd700;
+    outline: none;
 }
 
 /* Hero Section */
@@ -72,20 +83,33 @@ nav a:hover {
     margin-bottom: 2rem;
 }
 
-.cta-button {
-    display: inline-block;
+/* Telegram Button */
+.telegram-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0.8rem 1.5rem;
     background-color: #ffd700;
-    color: #333;
-    padding: 0.8rem 2rem;
-    text-decoration: none;
     border-radius: 25px;
+    color: #333;
     font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    max-width: fit-content;
+    margin: 0 auto;
 }
 
-.cta-button:hover {
+.telegram-button:hover {
     background-color: #ffca28;
     transform: scale(1.05);
+}
+
+.telegram-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
 
 /* Rules Section */
@@ -140,8 +164,10 @@ nav a:hover {
     font-weight: 500;
 }
 
-.contact-section a:hover {
+.contact-section a:hover,
+.contact-section a:focus {
     text-decoration: underline;
+    outline: none;
 }
 
 /* Footer Styles */
@@ -162,8 +188,10 @@ footer a {
     text-decoration: none;
 }
 
-footer a:hover {
+footer a:hover,
+footer a:focus {
     text-decoration: underline;
+    outline: none;
 }
 
 /* Responsive Design */
@@ -193,52 +221,4 @@ footer a:hover {
     .contact-section h2 {
         font-size: 1.5rem;
     }
-}
-.telegram-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.telegram-button:hover,
-.telegram-button:focus {
-    background-color: #ffca28;
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    outline: none;
-}
-
-.telegram-icon {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease;
-}
-
-.telegram-button:hover .telegram-icon {
-    transform: rotate(8deg) scale(1.1);
-}
-.telegram-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0.8rem 1.5rem;
-    background-color: #ffd700;
-    border-radius: 25px;
-    color: #333;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.telegram-button:hover {
-    background-color: #ffca28;
-    transform: scale(1.05);
-}
-
-.telegram-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
 }
