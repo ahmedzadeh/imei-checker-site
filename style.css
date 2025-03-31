@@ -218,3 +218,27 @@ footer a:hover {
 .telegram-button:hover .telegram-icon {
     transform: rotate(8deg) scale(1.1);
 }
+.telegram-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0.8rem 1.5rem;
+    background-color: #ffd700;
+    border-radius: 25px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.telegram-button:hover {
+    background-color: #ffca28;
+    transform: scale(1.05);
+}
+
+.telegram-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
