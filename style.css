@@ -1,108 +1,38 @@
-/* Reset default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Smooth scroll */
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
-}
-
-/* Reusable container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header Styles */
-header {
-    background-color: #1a73e8;
-    color: white;
-    padding: 1rem 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-container h1 {
-    font-size: 1.8rem;
-    font-weight: 600;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-nav a:hover,
-nav a:focus {
-    color: #ffd700;
-    outline: none;
-}
-
-/* Hero Section */
+/* Animated Hero Gradient */
 .hero {
-    background: linear-gradient(135deg, #1a73e8 0%, #4285f4 100%);
+    background: linear-gradient(-45deg, #1a73e8, #4285f4, #3367d6, #1e88e5);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
     color: white;
     padding: 5rem 20px;
     text-align: center;
 }
 
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
-.hero h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-/* Telegram Button */
+/* Telegram Button (Clean Style) */
 .telegram-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 0.8rem 1.5rem;
-    background-color: #ffd700;
+    background-color: #ffffff;
     border-radius: 25px;
-    color: #333;
+    color: #1a73e8;
     font-weight: 600;
     text-decoration: none;
     font-size: 1rem;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    max-width: fit-content;
-    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .telegram-button:hover {
-    background-color: #ffca28;
+    background-color: #f1f1f1;
     transform: scale(1.05);
 }
 
@@ -112,113 +42,31 @@ nav a:focus {
     object-fit: contain;
 }
 
-/* Rules Section */
+/* Animations */
+.animated {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
+}
+
+.animated.fade-in {
+    animation-delay: 0.3s;
+}
+
+.animated.slide-up {
+    animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Remove rules section completely if still in CSS */
 .rules-section {
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 0 20px;
+    display: none;
 }
 
-.rules-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #1a73e8;
-}
-
-.rules-section ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.rules-section li {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    font-size: 1.1rem;
-}
-
-/* Contact Section */
-.contact-section {
-    max-width: 800px;
-    margin: 3rem auto;
-    padding: 0 20px;
-    text-align: center;
-}
-
-.contact-section h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #1a73e8;
-}
-
-.contact-section p {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.contact-section a {
-    color: #1a73e8;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.contact-section a:hover,
-.contact-section a:focus {
-    text-decoration: underline;
-    outline: none;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #1a73e8;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 3rem;
-}
-
-footer p {
-    font-size: 0.9rem;
-}
-
-footer a {
-    color: #ffd700;
-    text-decoration: none;
-}
-
-footer a:hover,
-footer a:focus {
-    text-decoration: underline;
-    outline: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    nav {
-        margin-top: 1rem;
-    }
-
-    nav a {
-        margin: 0 10px;
-    }
-
-    .hero h2 {
-        font-size: 2rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .rules-section h2,
-    .contact-section h2 {
-        font-size: 1.5rem;
-    }
-}
+/* Rest of your existing styles (header, contact, footer, etc.) should remain */
