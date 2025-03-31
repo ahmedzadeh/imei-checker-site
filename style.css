@@ -1,4 +1,4 @@
-/* Reset default styles */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
@@ -59,7 +59,7 @@ nav a:focus {
   outline: none;
 }
 
-/* Hero Section with Animated Gradient */
+/* Hero Section */
 .hero {
   background: linear-gradient(-45deg, #1a73e8, #4285f4, #3367d6, #1e88e5);
   background-size: 400% 400%;
@@ -177,7 +177,7 @@ footer {
   }
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
   .header-container {
     flex-direction: column;
