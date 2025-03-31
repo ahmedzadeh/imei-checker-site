@@ -194,3 +194,27 @@ footer a:hover {
         font-size: 1.5rem;
     }
 }
+.telegram-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.telegram-button:hover,
+.telegram-button:focus {
+    background-color: #ffca28;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.telegram-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.telegram-button:hover .telegram-icon {
+    transform: rotate(8deg) scale(1.1);
+}
