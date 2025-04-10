@@ -73,15 +73,17 @@
     const orderId = urlParams.get("order_id");
     const imei = urlParams.get("imei");
     const amount = "0.32";
+    const merchant = "2210021863";
+    const secret = "123";
 
     if (orderId && imei) {
       document.getElementById("imeiInfo").textContent = `IMEI: ${imei} | $${amount} USD`;
 
       const desc = btoa(`IMEI Check for ${imei}`);
-      const signData = `${orderId}:${amount}:USD:${desc}:123`; // Simplified for front-end demo
+      const signData = `${merchant}:${orderId}:${amount}:USD:${desc}:${secret}`;
       sha256(signData).then(sign => {
         const params = new URLSearchParams({
-          m_shop: "2210021863",
+          m_shop: merchant,
           m_orderid: orderId,
           m_amount: amount,
           m_curr: "USD",
