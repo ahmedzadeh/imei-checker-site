@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IMEI Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #e0f0ff, #ffffff);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      color: #333;
+    }
+    .pay-button {
+      background: #0088cc;
+      color: white;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .pay-button:hover {
+      background: #006699;
+      transform: scale(1.05);
+    }
+    .checkmark {
+      font-size: 48px;
+      margin-top: 20px;
+      animation: pop 0.6s ease-out forwards;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Pay for IMEI Check</h2>
+    <p id="imeiInfo">Loading...</p>
+    <a id="payLink" class="pay-button" href="#" target="_blank">💳 Pay via Payeer</a>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get("order_id");
+    const imei = urlParams.get("imei");
+    const amount = "0.32";
+
+    if (orderId && imei) {
+      document.getElementById("imeiInfo").textContent = `IMEI: ${imei} | $${amount} USD`;
+
+      const desc = btoa(`IMEI Check for ${imei}`);
+      const signData = `${orderId}:${amount}:USD:${desc}:123`; // Simplified for front-end demo
+      sha256(signData).then(sign => {
+        const params = new URLSearchParams({
+          m_shop: "2210021863",
+          m_orderid: orderId,
+          m_amount: amount,
+          m_curr: "USD",
+          m_desc: desc,
+          m_sign: sign,
+          m_status_url: "https://api.imeichecks.online/payeer",
+          m_success_url: "https://imeichecks.online/success",
+          m_fail_url: "https://imeichecks.online/fail",
+          lang: "en"
+        });
+
+        const paymentUrl = `https://payeer.com/merchant/?${params.toString()}`;
+        const payBtn = document.getElementById("payLink");
+        payBtn.href = paymentUrl;
+        payBtn.addEventListener("click", () => {
+          setTimeout(() => {
+            document.querySelector(".container").innerHTML = `
+              <h2>✅ Payment Initiated</h2>
+              <p>Waiting for confirmation from Payeer...</p>
+              <div class="checkmark">✔️</div>
+            `;
+            startPolling();
+          }, 500);
+        });
+      });
+
+    } else {
+      document.getElementById("imeiInfo").textContent = "Invalid payment link.";
+      document.getElementById("payLink").style.display = "none";
+    }
+
+    // SHA256 in browser
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    function startPolling() {
+      const interval = setInterval(async () => {
+        try {
+          const res = await fetch(`https://api.imeichecks.online/payment-status?order_id=${orderId}`);
+          const data = await res.json();
+          if (data.paid) {
+            clearInterval(interval);
+            document.querySelector(".container").innerHTML = `
+              <h2>✅ Payment Confirmed</h2>
+              <p>Your IMEI result will be sent via Telegram shortly.</p>
+              <div class="checkmark">✔️</div>
+            `;
+            if (window.Telegram && Telegram.WebApp) {
+              setTimeout(() => Telegram.WebApp.close(), 3000);
+            }
+          }
+        } catch (err) {
+          console.error("Polling error:", err);
+        }
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
