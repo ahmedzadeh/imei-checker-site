@@ -79,8 +79,10 @@
     if (orderId && imei) {
       document.getElementById("imeiInfo").textContent = `IMEI: ${imei} | $${amount} USD`;
 
-      const desc = btoa(`IMEI Check for ${imei}`);
+      const rawDesc = `IMEI Check for ${imei}`;
+      const desc = btoa(unescape(encodeURIComponent(rawDesc))); // fix for non-ASCII desc
       const signData = `${merchant}:${orderId}:${amount}:USD:${desc}:${secret}`;
+
       sha256(signData).then(sign => {
         const params = new URLSearchParams({
           m_shop: merchant,
@@ -88,7 +90,7 @@
           m_amount: amount,
           m_curr: "USD",
           m_desc: desc,
-          m_sign: sign,
+          m_sign: sign.toUpperCase(),
           m_status_url: "https://api.imeichecks.online/payeer",
           m_success_url: "https://imeichecks.online/success",
           m_fail_url: "https://imeichecks.online/fail",
@@ -109,13 +111,11 @@
           }, 500);
         });
       });
-
     } else {
       document.getElementById("imeiInfo").textContent = "Invalid payment link.";
       document.getElementById("payLink").style.display = "none";
     }
 
-    // SHA256 in browser
     async function sha256(message) {
       const msgBuffer = new TextEncoder().encode(message);
       const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
